@@ -6,12 +6,11 @@ public class DatabaseConnection {
     private static final String URL = "jdbc:mysql://localhost:3306/bus_reservation_system";
     private static final String USER = "root";
     private static final String PASSWORD = "password";
-
     public static Connection connect() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
             return null;
         }
     }
@@ -22,7 +21,7 @@ public class DatabaseConnection {
                 connection.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e);
         }
     }
 }
