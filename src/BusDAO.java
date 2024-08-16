@@ -6,7 +6,7 @@ import java.sql.SQLException;
 public class BusDAO {
     public void addBus(Bus bus) {
         Connection connection = DatabaseConnection.connect();
-        String sql = "INSERT INTO buses (busId, busNumber, source, destination, totalSeats, availableSeats) VALUES (?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO bus (busId, busNumber, source, destination, totalSeats, availableSeats) VALUES (?, ?, ?, ?, ?, ?)";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -26,7 +26,7 @@ public class BusDAO {
 
     public Bus getBusById(int busId) {
         Connection connection = DatabaseConnection.connect();
-        String sql = "SELECT * FROM buses WHERE busId = ?";
+        String sql = "SELECT * FROM bus WHERE busId = ?";
         Bus bus = null;
 
         try {
@@ -55,7 +55,7 @@ public class BusDAO {
 
     public void updateBusSeats(int busId, int seats) {
         Connection connection = DatabaseConnection.connect();
-        String sql = "UPDATE buses SET availableSeats = ? WHERE busId = ?";
+        String sql = "UPDATE bus SET availableSeats = ? WHERE busId = ?";
 
         try {
             PreparedStatement statement = connection.prepareStatement(sql);
