@@ -1,35 +1,52 @@
-import javax.xml.transform.Result;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/bussystem";
-        String username  = "root";
-        String password = "";
+        Scanner scanner = new Scanner(System.in);
+        BusDAO busDAO = new BusDAO();
+        PassengerDAO passengerDAO = new PassengerDAO();
+        ReservationDAO reservationDAO = new ReservationDAO();
 
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
+        while (true) {
+            System.out.println("1. Add Bus");
+            System.out.println("2. Add Passenger");
+            System.out.println("3. Make Reservation");
+            System.out.println("4. Exit");
+            int choice = scanner.nextInt();
 
-            Connection connection  = DriverManager.getConnection(url,username,password);
-
-            Statement statement = connection.createStatement();
-
-            ResultSet resultSet = statement.executeQuery("select * from users");
-
-            while(resultSet.next()){
-                System.out.println(resultSet.getString(1)+" "+resultSet.getString(2)+" "+resultSet.getString(3)+" "+resultSet.getString(4));
+            switch (choice) {
+                case 1:
+                    System.out.println("Enter Bus ID, Number, Source, Destination, Total Seats:");
+                    int busId = scanner.nextInt();
+                    String busNumber = scanner.next();
+                    String source = scanner.next();
+                    String destination = scanner.next();
+                    int totalSeats = scanner.nextInt();
+                    Bus bus = new Bus(busId, busNumber, source, destination, totalSeats);
+                    busDAO.addBus(bus);
+                    break;
+                case 2:
+                    System.out.println("Enter Passenger ID, Name, Email:");
+                    int passengerId = scanner.nextInt();
+                    String name = scanner.next();
+                    String email = scanner.next();
+                    Passenger passenger = new Passenger(passengerId, name, email);
+                    passengerDAO.addPassenger(passenger);
+                    break;
+                case 3:
+                    System.out.println("Enter Reservation ID, Passenger ID, Bus ID, Seat Number:");
+                    int reservationId = scanner.nextInt();
+                    int resPassengerId = scanner.nextInt();
+                    int resBusId = scanner.nextInt();
+                    int seatNumber = scanner.nextInt();
+                    Reservation reservation = new Reservation(reservationId, resPassengerId, resBusId, seatNumber);
+                    reservationDAO.addReservation(reservation);
+                    busDAO.updateBusSeats(resBusId, busDAO.getBusById(resBusId).getAvailableSeats() - 1);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    return;
             }
-            connection.close();
         }
-        catch(Exception e){
-            System.out.println(e);
-        }
-
-
     }
 }
