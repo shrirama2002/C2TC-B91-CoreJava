@@ -1,0 +1,28 @@
+/*About us page*/
+
+.main {
+    padding: 20px;
+    background: #D2E0FB;
+    margin-top: 20px;
+    color: #000;
+}
+.main h1 {
+    text-align: center;
+    color: #333;
+}
+.main p {
+    text-align: justify;
+}
+.team {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.team-member {
+    text-align: center;
+}
+.team-member img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+}
